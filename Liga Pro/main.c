@@ -1,108 +1,83 @@
 #include <stdio.h>
-#include <string.h>
 #include "funciones.h"
 
-void mostrarMenu()
-{
-    printf("\n=================================================\n");
-    printf("              ESTADISTICAS LIGA PRO               \n");
-    printf("=================================================\n");
-    printf("1. Inicializar datos del campeonato\n");
-    printf("2. Mostrar tabla de goleadores\n");
-    printf("3. Mostrar resultados de partidos\n");
-    printf("4. Mostrar tabla de posiciones\n");
-    printf("5. Mostrar jugadores clave por equipo\n");
-    printf("0. Salir\n");
-    printf("=================================================\n");
-    printf("Ingrese una opcion: ");
-}
-
-void pausar()
-{
+void pausar() {
     printf("\nPresione Enter para continuar...");
-    while (getchar() != '\n')
-        ;      // Limpiar el buffer
-    getchar(); // Esperar por Enter
+    // Limpia el buffer de entrada antes de esperar el Enter
+    while (getchar() != '\n');
+    getchar();
 }
 
-int main()
-{
-    int opcion = -1;
-    int datosInicializados = 0;
+int main() {
+    int opcion;
+    // Flag para saber si los datos ya fueron cargados en los archivos .bin
+    int datosInicializados = 0; 
 
-    while (opcion != 0)
-    {
-        printf("\n\n"); // Separador visual en lugar de clear screen
-        mostrarMenu();
-        scanf("%d", &opcion);
-
-        switch (opcion)
-        {
-        case 0:
-            printf("\nGracias por usar el sistema de estadisticas de Liga Pro!\n");
-            break;
-
-        case 1:
-            inicializarDatos();
-            datosInicializados = 1;
-            printf("\nTodos los datos han sido inicializados correctamente!\n");
-            pausar();
-            break;
-
-        case 2:
-            if (!datosInicializados)
-            {
-                printf("\nPrimero debe inicializar los datos (opcion 1).\n");
-            }
-            else
-            {
-                mostrarJugadores();
-            }
-            pausar();
-            break;
-
-        case 3:
-            if (!datosInicializados)
-            {
-                printf("\nPrimero debe inicializar los datos (opcion 1).\n");
-            }
-            else
-            {
-                mostrarPartidos();
-            }
-            pausar();
-            break;
-
-        case 4:
-            if (!datosInicializados)
-            {
-                printf("\nPrimero debe inicializar los datos (opcion 1).\n");
-            }
-            else
-            {
-                mostrarTabla();
-            }
-            pausar();
-            break;
-
-        case 5:
-            if (!datosInicializados)
-            {
-                printf("\nPrimero debe inicializar los datos (opcion 1).\n");
-            }
-            else
-            {
-                mostrarJugadoresClave();
-            }
-            pausar();
-            break;
-
-        default:
-            printf("\nOpcion invalida. Por favor seleccione una opcion valida.\n");
-            pausar();
-            break;
+    do {
+        // system("cls"); // Descomentar para limpiar la pantalla en Windows
+        printf("\n\n--- Menú Principal Liga Pro ---\n");
+        printf("1. Cargar/Reiniciar Datos del Campeonato\n");
+        printf("2. Ver Tabla de Goleadores\n");
+        printf("3. Ver Resultados de Partidos\n");
+        printf("4. Ver Tabla de Posiciones\n");
+        printf("5. Ver Jugadores Clave por Equipo\n");
+        printf("0. Salir\n");
+        printf("Seleccione una opción: ");
+        
+        // Validar que la entrada sea un número
+        if (scanf("%d", &opcion) != 1) {
+            printf("Entrada no válida. Por favor, ingrese un número.\n");
+            while (getchar() != '\n'); // Limpiar buffer
+            opcion = -1; // Asignar opción inválida para que el switch no haga nada
         }
-    }
+
+        switch (opcion) {
+            case 1:
+                inicializarDatos();
+                datosInicializados = 1;
+                printf("\n¡Datos del campeonato cargados y guardados con éxito!\n");
+                pausar();
+                break;
+            case 2:
+                if (datosInicializados) {
+                    mostrarJugadores();
+                } else {
+                    printf("\nPrimero debe cargar los datos (Opción 1).\n");
+                }
+                pausar();
+                break;
+            case 3:
+                if (datosInicializados) {
+                    mostrarPartidos();
+                } else {
+                    printf("\nPrimero debe cargar los datos (Opción 1).\n");
+                }
+                pausar();
+                break;
+            case 4:
+                if (datosInicializados) {
+                    mostrarTabla();
+                } else {
+                    printf("\nPrimero debe cargar los datos (Opción 1).\n");
+                }
+                pausar();
+                break;
+            case 5:
+                if (datosInicializados) {
+                    mostrarJugadoresClave();
+                } else {
+                    printf("\nPrimero debe cargar los datos (Opción 1).\n");
+                }
+                pausar();
+                break;
+            case 0:
+                printf("Saliendo del programa...\n");
+                break;
+            default:
+                printf("Opción no válida. Por favor, intente de nuevo.\n");
+                pausar();
+        }
+    } while (opcion != 0);
 
     return 0;
 }
