@@ -1,8 +1,3 @@
-#ifndef FUNCIONES_H
-#define FUNCIONES_H
-
-#include <stdio.h>
-
 // Estructuras para almacenar los datos
 typedef struct
 {
@@ -57,5 +52,3 @@ void inicializarPartidos(Partido partidos[]);
 void inicializarTabla(EquipoTabla equipos[]);
 void inicializarJugadoresClave(EquipoJugadores equipos[]);
 void inicializarDatos();
-
-#endif // FUNCIONES_H
